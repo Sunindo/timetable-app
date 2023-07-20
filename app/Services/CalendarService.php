@@ -2,10 +2,6 @@
 
 namespace App\Services;
 
-use App\ApiAuthTokens;
-use App\Schools;
-use Wonde\Client;
-
 class CalendarService
 {
     public function generateCalendarData($weekDays)
@@ -15,43 +11,6 @@ class CalendarService
         // $lessons = Lesson::with('class', 'teacher')
         //     ->calendarByRoleOrClassId()
         //     ->get();
-
-        $authToken = ApiAuthTokens::where('service_name', '=', 'wonde')->pluck('token')->first();
-
-        $client = new Client($authToken);
-
-        $schoolId = Schools::where('name', '=', 'Wonde Testing School')->pluck('wonde_id')->first();
-        $school = $client->school($schoolId);
-
-        foreach ($school->lessons->all(['period', 'class', 'employee', 'room'], []) as $lesson) {
-            var_dump($lesson);
-            die();
-        }
-
-        foreach ($school->classes->all(['lessons'], ['has_students' => true, 'has_lessons' => true]) as $class) {
-            var_dump($class);
-            die();
-        }
-
-        foreach ($school->employees->all(['employment_details', 'classes'], ['has_class' => true]) as $employee) {
-            // ->upi Unique Person Identifier - If a person is a contact and an employee they will have the same UPI but different ids
-            var_dump($employee);
-            die();
-
-            // echo $employee->forename . ' ' . $employee->surname . ' - is a teacher? (' . $employee->employment_details->data->teaching_staff . ')';
-            // echo "<br>";
-        }
-
-
-
-        // can get the employee with their classes
-        // those class have lessons
-        // can each classes lessons to fill the calendar
-        // can also get each lessons students
-
-        // step 1: get employee and their classes
-        // step 2: get the classes' lessons
-        // step 3: get the lessons students
 
         foreach ($timeRange as $time)
         {
