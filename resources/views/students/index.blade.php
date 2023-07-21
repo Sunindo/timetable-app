@@ -4,11 +4,11 @@
 
     <div class="card">
         <div class="card-header">
-            Students
+            Your Students
         </div>
 
         <div class="card-body">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-User">
+            <table class="table table-bordered table-striped table-hover datatable datatable-User">
                 <thead>
                     <tr>
                         <th>Student Name</th>

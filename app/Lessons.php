@@ -23,6 +23,7 @@ class Lessons extends Model
      */
     protected $fillable = [
         'wonde_id',
+        'class_id',
         'room_id',
         'start_time',
         'end_time',

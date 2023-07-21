@@ -41,11 +41,13 @@ class WondeImportClasses extends Command
                 }    
             }
 
+            // TODO: Clear down tables and test import again
             if (!is_null($class->lessons)) {
                 foreach ($class->lessons->data as $lesson) {
                     Lessons::firstOrCreate(
                         ['wonde_id' => $lesson->id],
-                        ['room_id' => $lesson->room,
+                        ['class_id' => $classRecord->id,
+                        'room_id' => $lesson->room,
                         'start_time' => $lesson->period->data->start_time,
                         'end_time' => $lesson->period->data->end_time,
                         'period_day' => $lesson->period->data->day,]

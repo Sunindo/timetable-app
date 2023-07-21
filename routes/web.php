@@ -26,3 +26,4 @@ Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
 Route::get('/classes', [ClassesController::class, 'index'])->name('classes.index');
+Route::get('getclasses', [ClassesController::class, 'getClasses'])->name('classes.getclasses');
