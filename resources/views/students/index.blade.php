@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Lesson">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                 <thead>
                     <tr>
                         <th>Student Name</th>
@@ -24,7 +24,9 @@
                             @foreach($weekDays as $index => $day) 
                                 <td style="text-align: center;">
                                     @if($student['weekdays'][$day])
-                                        <span><i class="fas fa-check"></i></span>
+                                        <span>
+                                            <i class="fas fa-check"></i>
+                                        </span>
                                     @endif
                                 </td>
                             @endforeach
@@ -39,5 +41,22 @@
 @endsection
 @section('scripts')
 @parent
+<script>
+
+    $(document).ready(function() {
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+        if ($.fn.DataTable.isDataTable('.datatable-User')) {
+            $('.datatable-User').DataTable().destroy();
+        }
+
+        $('.datatable-User').DataTable({
+            buttons: dtButtons,
+            order: [[ 0, 'asc' ]],
+            pageLength: 100,
+            paging: true,
+        });
+    });
+</script>
 
 @endsection

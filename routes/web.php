@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentsController;
 
@@ -24,3 +25,4 @@ Route::get('/', function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
+Route::get('/classes', [ClassesController::class, 'index'])->name('classes.index');

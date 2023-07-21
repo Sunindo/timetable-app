@@ -27,11 +27,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route("students.index") }}" class="nav-link">
-                    <i class="fa-fw fas fa-user nav-icon">
+                <a href="{{ route("classes.index") }}" class="nav-link">
+                    <i class="fa-fw fas fa-users nav-icon">
 
                     </i>
-                    Students Ajax
+                    Classes
                 </a>
             </li>
 
