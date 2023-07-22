@@ -29,6 +29,8 @@ class WondeImportClasses extends Command
 
         $classes = $school->classes->all(['students', 'lessons.period'], []);
 
+        $weekDays = config('weekdays');
+
         foreach ($classes as $class) {
             $classRecord = Classes::updateOrCreate(
                 ['wonde_id' => $class->id],
@@ -41,7 +43,6 @@ class WondeImportClasses extends Command
                 }    
             }
 
-            // TODO: Clear down tables and test import again
             if (!is_null($class->lessons)) {
                 foreach ($class->lessons->data as $lesson) {
                     Lessons::firstOrCreate(
@@ -50,7 +51,8 @@ class WondeImportClasses extends Command
                         'room_id' => $lesson->room,
                         'start_time' => $lesson->period->data->start_time,
                         'end_time' => $lesson->period->data->end_time,
-                        'period_day' => $lesson->period->data->day,]
+                        'period_day' => $lesson->period->data->day,
+                        'day_value' => array_search($lesson->period->data->day, $weekDays)]
                     );
                 }    
             }

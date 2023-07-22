@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Classes;
 use App\Students;
 use App\Teachers;
@@ -25,13 +26,21 @@ class ClassesController extends Controller
 
         $data = [];
 
-        $classes = Classes::select('classes.wonde_id', 'classes.name')
+        // Need to design a method to order by day of the week Monday = 0 Friday = 5
+        $classes = Classes::select('classes.wonde_id', 'classes.name', 'l.start_time', 'l.end_time', 'l.period_day', 'l.day_value')
             ->join('teacher_class_assignments AS tca', 'tca.class_id', '=', 'classes.wonde_id')
+            ->join('lessons as l', 'l.class_id', '=', 'classes.id')
             ->where('tca.teacher_id', '=', $request['teacher_id'])
+            ->orderBy('l.day_value')
+            ->orderBy('l.start_time')
             ->get()->toArray();
 
         foreach ($classes as $class_id => $class) {
             $data[$class_id]['class_name'] = $class['name'];
+            // Probably not worth making a Carbon object to remove the unnecessary seconds.
+            $data[$class_id]['start_time'] = substr($class['start_time'], 0, -3);
+            $data[$class_id]['end_time'] = substr($class['end_time'], 0, -3);
+            $data[$class_id]['period_day'] = $class['period_day'];
             
             $students = Students::select('forename', 'surname')
                 ->join('student_class_assignments AS sca', 'sca.student_id', '=', 'students.wonde_id')

@@ -28,5 +28,6 @@ class Lessons extends Model
         'start_time',
         'end_time',
         'period_day',
+        'day_value',
     ];
 }

@@ -24,10 +24,10 @@
                                     </td>
                                     @foreach($days as $value)
                                         @if (is_array($value))
-                                            <!-- <td rowspan="{{ $value['rowspan'] }}" class="align-middle text-center" style="background-color:#f0f0f0">
-                                                {{ $value['class_name'] }}<br>
-                                                Teacher: {{ $value['teacher_name'] }}
-                                            </td> -->
+                                            <td rowspan="{{ $value['rowspan'] }}" class="align-middle text-center" style="background-color:#f0f0f0">
+                                                Class: {{ $value['class_name'] }}<br>
+                                                Room ID: {{ $value['room_id'] }}
+                                            </td>
                                         @elseif ($value === 1)
                                             <td></td>
                                         @endif

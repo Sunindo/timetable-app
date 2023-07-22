@@ -28,29 +28,33 @@
 
             <!-- Add scenario for user with no classes -->
             @if(isset($data))
-                @foreach($data as $class)
-                    <h3>{{ $class['class_name'] }}</h3>
-                    <button class="accordion">
-                    </button>
-                    <div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($class['students'] as $id => $student)
-                                    <tr>
-                                        <td>{{ $student['forename'] }}</td>
-                                        <td>{{ $student['surname'] }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endforeach
+                <div style="padding-top: 20px">
+                    @if(empty($data))
+                        <h3>No classes found.</h3>
+                    @else
+                        @foreach($data as $class)
+                            <h3>Class {{ $class['class_name'] }} - {{ ucfirst($class['period_day']) }} ({{ $class['start_time'] }} - {{ $class['end_time'] }})</h3>
+                            <div style="padding-top: 20px">
+                                <table class="table table-bordered table-striped table-hover datatable datatable-User">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($class['students'] as $id => $student)
+                                            <tr>
+                                                <td>{{ $student['forename'] }}</td>
+                                                <td>{{ $student['surname'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
             @endif
         </div>
     </div>
@@ -60,4 +64,22 @@
 @endsection
 @section('scripts')
 @parent
+<script>
+
+    $(document).ready(function() {
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+        if ($.fn.DataTable.isDataTable('.datatable-User')) {
+            $('.datatable-User').DataTable().destroy();
+        }
+
+        $('.datatable-User').DataTable({
+            buttons: dtButtons,
+            order: [[ 0, 'asc' ]],
+            pageLength: 10,
+            paging: true,
+        });
+    });
+</script>
+
 @endsection
