@@ -26,7 +26,6 @@
                 </div>
             </form>
 
-            <!-- Add scenario for user with no classes -->
             @if(isset($data))
                 <div style="padding-top: 20px">
                     @if(empty($data))

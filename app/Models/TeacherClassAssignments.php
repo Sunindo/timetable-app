@@ -1,28 +1,28 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Schools extends Model
+class TeacherClassAssignments extends Model
 {
     /**
      * The database table used by the model.
      */
-    protected $table = "schools";
+    protected $table = "teacher_class_assignments";
 
     /**
      * Indicates if the model should be timestamped.
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
      * @var array
      */
     protected $fillable = [
-        'name',
-        'wonde_id',
+        'teacher_id',
+        'class_id',
     ];
 }

@@ -3,7 +3,7 @@
 
         <ul class="nav">
             <li class="nav-item">
-                <a href="{{ route("home.index") }}" class="nav-link">
+                <a href="{{ route("home") }}" class="nav-link">
                     <i class="nav-icon fas fa-fw fa-tachometer-alt">
 
                     </i>
@@ -32,6 +32,14 @@
 
                     </i>
                     Classes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route("logout") }}" class="nav-link">
+                    <i class="fa-fw fa fa-sign-out nav-icon">
+
+                    </i>
+                    Logout
                 </a>
             </li>
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\ApiAuthTokens;
-use App\Schools;
+use App\Models\ApiAuthTokens;
+use App\Models\Schools;
+use App\Models\Teachers;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Wonde\Client;
 
 class StudentsController extends Controller
@@ -16,6 +19,10 @@ class StudentsController extends Controller
      */
     public function index()
     {
+        $user = User::find(Auth::user()->id);
+        $teacherId = Teachers::where('wonde_id', '=', $user->teacher_id)
+            ->pluck('wonde_id')->first();
+
         // Array to contain the students from each day of the week.
         $weeklyStudents = [];
         $weekDays = config('weekdays');
@@ -33,7 +40,7 @@ class StudentsController extends Controller
 
         // TODO: REPLACE THE HARD CODED STRING WITH THE EMPLOYEE ID FROM THE LOGIN PAGE
         // Retrieve the employee data for the provided Wonde Employee ID.
-        $employee = $school->employees->get('A500460806', ['employment_details', 'classes'], ['has_class' => true]);
+        $employee = $school->employees->get($teacherId, ['employment_details', 'classes'], ['has_class' => true]);
 
         // Employees have multiple classes; loop through each class to obtain the students and the days they will be taught.
         foreach ($employee->classes->data as $class) {

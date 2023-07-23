@@ -13,7 +13,7 @@
                         <thead>
                             <th width="125">Time</th>
                             @foreach($weekDays as $day)
-                                <th>{{ $day }}</th>
+                                <th>{{ ucfirst($day) }}</th>
                             @endforeach
                         </thead>
                         <tbody>

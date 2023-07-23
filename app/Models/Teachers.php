@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Classes extends Model
+class Teachers extends Model
 {
     /**
      * The database table used by the model.
      */
-    protected $table = "classes";
+    protected $table = "teachers";
 
     /**
      * Indicates if the model should be timestamped.
@@ -23,6 +23,9 @@ class Classes extends Model
      */
     protected $fillable = [
         'wonde_id',
-        'name',
+        'upi',
+        'title',
+        'forename',
+        'surname',
     ];
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Teachers extends Model
+class ApiAuthTokens extends Model
 {
     /**
      * The database table used by the model.
      */
-    protected $table = "teachers";
+    protected $table = "api_auth_tokens";
 
     /**
      * Indicates if the model should be timestamped.
@@ -22,10 +22,8 @@ class Teachers extends Model
      * @var array
      */
     protected $fillable = [
-        'wonde_id',
-        'upi',
-        'title',
-        'forename',
-        'surname',
+        'service_name',
+        'token',
+        'expires_at',
     ];
 }

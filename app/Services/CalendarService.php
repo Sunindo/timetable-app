@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
-use App\Lessons;
+use App\Models\User;
+use App\Models\Lessons;
+use App\Models\Teachers;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarService
 {
@@ -12,10 +15,13 @@ class CalendarService
         $calendarData = [];
         $timeRange = (new TimeService)->generateTimeRange(config('app.calendar.start_time'), config('app.calendar.end_time'));
 
+        $user = User::find(Auth::user()->id);
+
         $lessons = Lessons::select('lessons.room_id', 'lessons.start_time', 'lessons.end_time', 'lessons.period_day', 'c.name')
             ->join('classes as c', 'c.id', '=', 'lessons.class_id')
             ->join('teacher_class_assignments as tca', 'tca.class_id', '=', 'c.wonde_id')
-            ->where('tca.teacher_id', '=', '68')
+            ->join('teachers as t', 't.id', '=', 'tca.teacher_id')
+            ->where('t.wonde_id', '=', $user->teacher_id)
             ->get();
 
         foreach ($timeRange as $time) {

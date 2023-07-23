@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TeacherClassAssignments extends Model
+class StudentClassAssignments extends Model
 {
     /**
      * The database table used by the model.
      */
-    protected $table = "teacher_class_assignments";
+    protected $table = "student_class_assignments";
 
     /**
      * Indicates if the model should be timestamped.
@@ -22,7 +22,7 @@ class TeacherClassAssignments extends Model
      * @var array
      */
     protected $fillable = [
-        'teacher_id',
+        'student_id',
         'class_id',
     ];
 }

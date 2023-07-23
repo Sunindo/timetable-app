@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\ApiAuthTokens;
-use App\Classes;
-use App\Lessons;
-use App\Schools;
-use App\StudentClassAssignments;
+use App\Models\ApiAuthTokens;
+use App\Models\Classes;
+use App\Models\Lessons;
+use App\Models\Schools;
+use App\Models\StudentClassAssignments;
 use Illuminate\Console\Command;
 use Wonde\Client;
 

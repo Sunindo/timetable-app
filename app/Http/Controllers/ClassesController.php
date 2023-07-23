@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\Classes;
-use App\Students;
-use App\Teachers;
+use App\Models\Classes;
+use App\Models\Students;
+use App\Models\Teachers;
 use Illuminate\Http\Request;
 
 class ClassesController extends Controller
@@ -22,11 +21,10 @@ class ClassesController extends Controller
         return view('classes.index', compact('teachers'));
     }
 
-    public function getClasses(Request $request) {
-
+    public function getClasses(Request $request)
+    {
         $data = [];
 
-        // Need to design a method to order by day of the week Monday = 0 Friday = 5
         $classes = Classes::select('classes.wonde_id', 'classes.name', 'l.start_time', 'l.end_time', 'l.period_day', 'l.day_value')
             ->join('teacher_class_assignments AS tca', 'tca.class_id', '=', 'classes.wonde_id')
             ->join('lessons as l', 'l.class_id', '=', 'classes.id')
