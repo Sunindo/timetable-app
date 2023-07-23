@@ -26,12 +26,13 @@
                 </div>
             </form>
 
-            @if(isset($data))
+            @if(isset($classData))
                 <div style="padding-top: 20px">
-                    @if(empty($data))
+                    <h3>Class Schedule for: {{ $selectedTeacher->forename }} {{ $selectedTeacher->surname }}</h3>
+                    @if(empty($classData))
                         <h3>No classes found.</h3>
                     @else
-                        @foreach($data as $class)
+                        @foreach($classData as $class)
                             <h3>Class {{ $class['class_name'] }} - {{ ucfirst($class['period_day']) }} ({{ $class['start_time'] }} - {{ $class['end_time'] }})</h3>
                             <div style="padding-top: 20px">
                                 <table class="table table-bordered table-striped table-hover datatable datatable-User">

@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Calendar
+                    {{ Auth::user()->name }}'s Lesson Calendar
                 </div>
 
                 <div class="card-body">

@@ -13,13 +13,19 @@ use Wonde\Client;
 class StudentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the logged in user's weekly student roster.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        // TODO: 
+        // Add ability for user to select a school on login or when trying to view page.
+        // Currently school is hard coded to provided test school from Wonde.
+
+        // Retrieve the logged in user object.
         $user = User::find(Auth::user()->id);
+        // Retrieve the employee_id / employee Wonde ID for use in the Wonde API.
         $teacherId = Teachers::where('wonde_id', '=', $user->teacher_id)
             ->pluck('wonde_id')->first();
 
@@ -33,16 +39,14 @@ class StudentsController extends Controller
         // Create Wonde Client.
         $client = new Client($authToken);
 
-        // TODO: Add ability for user to select a school on login or when trying to view page.
-        // Retrieve the Wonde API School ID for the selected school.
+        // Retrieve the Wonde School ID for the selected school.
         $schoolId = Schools::where('name', '=', 'Wonde Testing School')->pluck('wonde_id')->first();
         $school = $client->school($schoolId);
 
-        // TODO: REPLACE THE HARD CODED STRING WITH THE EMPLOYEE ID FROM THE LOGIN PAGE
         // Retrieve the employee data for the provided Wonde Employee ID.
         $employee = $school->employees->get($teacherId, ['employment_details', 'classes'], ['has_class' => true]);
 
-        // Employees have multiple classes; loop through each class to obtain the students and the days they will be taught.
+        // Employees have multiple classes; loop through each class to obtain the students and the days they will be present.
         foreach ($employee->classes->data as $class) {
             // Retrieve the class using the class ids the employee teaches.
             // Includes class details, students within class, and lessons associated with class.
@@ -51,21 +55,25 @@ class StudentsController extends Controller
             $studentData = [];
             foreach ($class->students->data as $student) {
                 $weeklyStudents[$student->id]['details'] = [];
-                // Create a section in the array for each day (Mon-Fri).
+                // Create a section in the array for each day (Mon-Fri) and default the student to not being present.
                 foreach ($weekDays as $index => $day) {
                     $weeklyStudents[$student->id]['weekdays'][$day] = false;
                 }
 
+                // Store the students name details for display.
                 $weeklyStudents[$student->id]['details']['forename'] = $student->forename;
                 $weeklyStudents[$student->id]['details']['surname'] = $student->surname;
             }
 
             $daysData = [];
             foreach ($class->lessons->data as $lesson) {
+                // Store each day the class will have a lesson into the daysData array.
                 array_push($daysData, $lesson->period->data->day);
             }
+            // Compact the array down to each unique day all students in this class will be present.
             $daysData = array_unique($daysData);
 
+            // Mark each student in weeklyStudents as present for the weekdays found in daysData.
             foreach ($weeklyStudents as $id => $student) {
                 foreach ($daysData as $day) {
                     $weeklyStudents[$id]['weekdays'][$day] = true;

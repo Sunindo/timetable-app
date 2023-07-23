@@ -1,5 +1,6 @@
 <?php
 
+// DataTable button strings.
 return [
     'select_all'                           => 'Select all',
     'deselect_all'                         => 'Deselect all',
