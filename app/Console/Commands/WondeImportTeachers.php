@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Models\ApiAuthTokens;
 use App\Models\Schools;
 use App\Models\TeacherClassAssignments;
 use App\Models\Teachers;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Wonde\Client;
 
 class WondeImportTeachers extends Command
@@ -36,7 +36,7 @@ class WondeImportTeachers extends Command
         echo "Beginning Wonde Teacher Import\n";
 
         // Get the auth token required for the API connection.
-        $authToken = ApiAuthTokens::where('service_name', '=', 'wonde')->pluck('token')->first();
+        $authToken = Config::get('services.wonde.key');
 
         // Create Wonde API client.
         $client = new Client($authToken);

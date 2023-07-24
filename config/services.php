@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'wonde' => [
+        'key' => env('WONDE_API_KEY'),
+    ],
+    
 ];

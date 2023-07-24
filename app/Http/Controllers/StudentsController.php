@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ApiAuthTokens;
 use App\Models\Schools;
 use App\Models\Teachers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Wonde\Client;
 
 class StudentsController extends Controller
@@ -34,7 +34,7 @@ class StudentsController extends Controller
         $weekDays = config('weekdays');
 
         // Retrieve the auth token to connect to the Wonde API.
-        $authToken = ApiAuthTokens::where('service_name', '=', 'wonde')->pluck('token')->first();
+        $authToken = Config::get('services.wonde.key');
 
         // Create Wonde Client.
         $client = new Client($authToken);
@@ -80,6 +80,12 @@ class StudentsController extends Controller
                 }
             }
         }
+
+        // TODO:
+        // 24th July 2023
+        // Something changed in the data being provided by the WondeApi between the 23rd and 24th
+        // Classes objects are being received with no Lessons associated
+        // $class->lessons->data is now empty for all classes so no students can be marked as present; need solution.
         
         // Return view with array students employee will see separated by day of the week.
         return view('students.index', compact('weekDays', 'weeklyStudents'));
