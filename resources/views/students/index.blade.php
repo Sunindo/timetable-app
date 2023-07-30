@@ -53,7 +53,7 @@
         $('.datatable-User').DataTable({
             buttons: dtButtons,
             order: [[ 0, 'asc' ]],
-            pageLength: 100,
+            pageLength: 25,
             paging: true,
         });
     });
